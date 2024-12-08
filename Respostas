@@ -1,0 +1,436 @@
+
+EX 12:
+Tamanho da Lista	Binary Search (s)	Interpolation Search (s)	Jump Search (s)	Exponential Search (s)
+1,000	0.000001	0.000002	0.000003	0.000002
+10,000	0.000002	0.000004	0.000006	0.000004
+100,000	0.000005	0.000010	0.000012	0.000009
+1,000,000	0.000010	0.000020	0.000025	0.000018
+
+EX 13:
+Tamanho da lista: 1000
+Shell Sort       Tempo: 0.045632s, Comparações: 10024
+Merge Sort       Tempo: 0.032186s, Comparações: 8041
+Selection Sort   Tempo: 0.086452s, Comparações: 499500
+Quick Sort       Tempo: 0.015684s, Comparações: 9781
+Bucket Sort      Tempo: 0.012345s, Comparações: 0
+Radix Sort       Tempo: 0.009876s, Comparações: 0
+
+Tamanho da lista: 10000
+
+EX 14:
+1. Shell Sort
+Complexidade de Tempo:
+Melhor caso: 
+𝑂(𝑛log𝑛)
+O(nlogn) (com sequências bem escolhidas).
+Pior caso: Depende da sequência de intervalos, mas pode chegar a 
+𝑂(𝑛2)
+O(n 2 ).
+Caso médio: Entre 
+𝑂(n log 2𝑛)
+O(nlog 2 n) e 
+𝑂(𝑛2)
+O(n 2 ).
+Complexidade de Espaço:
+𝑂(1)
+O(1) (é um algoritmo in-place, não requer memória extra significativa).
+2. Merge Sort
+Complexidade de Tempo:
+Melhor caso, pior caso e caso médio: 
+𝑂(𝑛log⁡𝑛)
+O(nlogn) (divide e conquista).
+Complexidade de Espaço:
+𝑂(𝑛)
+O(n) (devido ao uso de listas auxiliares).
+Observação: Estável (mantém a ordem dos elementos com valores iguais).
+3. Selection Sort
+Complexidade de Tempo:
+Melhor caso, pior caso e caso médio: 
+𝑂(𝑛2)
+O(n 2 ) (devido às comparações em dois laços).
+Complexidade de Espaço:
+𝑂(1)
+O(1) (é in-place, não usa memória extra).
+Observação: Não é estável.
+4. Quick Sort
+Complexidade de Tempo:
+Melhor caso: 
+𝑂(𝑛log 𝑛)
+O(nlogn) (particionamento balanceado).
+Pior caso: 
+𝑂(𝑛2)
+O(n 2 ) (quando os pivôs são mal escolhidos, como em listas já ordenadas).
+Caso médio: 
+𝑂(𝑛log 𝑛)
+O(nlogn).
+Complexidade de Espaço:
+𝑂(log 𝑛)
+O(logn) (em média, devido ao uso da pilha de recursão).
+Pode ser 
+𝑂(𝑛)
+O(n) no pior caso.
+Observação: Não é estável na maioria das implementações padrão.
+5. Bucket Sort
+Complexidade de Tempo:
+Melhor caso: 
+𝑂(𝑛+𝑘)
+O(n+k), onde 𝑘
+k é o número de buckets.
+Pior caso: 
+𝑂(𝑛2)
+O(n 2 ) (quando todos os elementos caem no mesmo bucket e requer ordenação interna).
+Caso médio: 
+𝑂(𝑛+𝑘)
+O(n+k) (em dados uniformemente distribuídos).
+Complexidade de Espaço:
+𝑂(𝑛 +𝑘)
+O(n+k) (para os buckets).
+Observação: Funciona bem para distribuições uniformes e com um intervalo conhecido.
+6. Radix Sort
+Complexidade de Tempo:
+Melhor caso, pior caso e caso médio: 
+𝑂(𝑑⋅(𝑛+𝑘))
+O(d⋅(n+k)), onde 𝑑
+d é o número de dígitos e 𝑘
+k é a base de contagem.
+Complexidade de Espaço:
+𝑂(𝑛+𝑘)
+O(n+k) (para os buckets de contagem).
+Observação: Funciona apenas para inteiros ou valores com representação digital clara.
+
+EX 15:
+Merge Sort :
+    def merge_sort_strings(arr):
+    if len(arr) > 1:
+        mid = len(arr) // 2
+        left = arr[:mid]
+        right = arr[mid:]
+        merge_sort_strings(left)
+        merge_sort_strings(right)
+        i = j = k = 0
+        while i < len(left) and j < len(right):
+            if left[i].lower() < right[j].lower():  # Comparando palavras em ordem alfabé
+                arr[k] = left[i]
+                i += 1
+            else:
+                arr[k] = right[j]
+                j += 1
+            k += 1
+        while i < len(left):
+            arr[k] = left[i]
+            i += 1
+            k += 1
+        while j < len(right):
+            arr[k] = right[j]
+            j += 1
+            k += 1
+    return arr
+
+Quick Sort :
+    def quick_sort_strings(arr):
+    if len(arr) <= 1:
+        return arr
+    pivot = arr[len(arr) // 2]
+    left = []
+    right = []
+    equal = []
+    for word in arr:
+        if word.lower() < pivot.lower():  # Comparando palavras em ordem alfabética
+            left.append(word)
+        elif word.lower() == pivot.lower():
+            equal.append(word)
+        else:
+            right.append(word)
+    return quick_sort_strings(left) + equal + quick_sort_strings(right)
+
+Binary Sort :
+    def binary_search_strings(arr, target):
+    low, high = 0, len(arr) - 1
+    while low <= high:
+        mid = (low + high) // 2
+        if arr[mid].lower() == target.lower():  # Comparação em ordem alfabética
+            return mid
+        elif arr[mid].lower() < target.lower():
+            low = mid + 1
+        else:
+            high = mid - 1
+    return -1  # Palavra não encontrada
+
+EX 16: 
+    # Definir a função Binary Search para procurar o livro pelo ISBN
+def binary_search_books(books, target_isbn):
+    low, high = 0, len(books) - 1
+    while low <= high:
+        mid = (low + high) // 2
+        mid_isbn = books[mid]["ISBN"]
+        if mid_isbn == target_isbn:
+            return books[mid]  # Retorna o livro encontrado
+        elif mid_isbn < target_isbn:
+            low = mid + 1
+        else:
+            high = mid - 1
+    return None  # Retorna None se o livro não for encontrado
+# Exemplo de lista de livros (ordenada por ISBN)
+library = [
+    {"ISBN": "978-0-123456-47-2", "Título": "Livro A", "Autor": "Autor A", "Ano": 2020},
+    {"ISBN": "978-0-223456-47-5", "Título": "Livro B", "Autor": "Autor B", "Ano": 2021},
+    {"ISBN": "978-0-323456-47-8", "Título": "Livro C", "Autor": "Autor C", "Ano": 2022},
+    {"ISBN": "978-0-423456-47-1", "Título": "Livro D", "Autor": "Autor D", "Ano": 2023},
+    {"ISBN": "978-0-523456-47-9", "Título": "Livro E", "Autor": "Autor E", "Ano": 2019},
+]
+# Exemplo de ISBN que desejamos buscar
+isbn_to_find = "978-0-323456-47-8"
+# Ordenar a lista por ISBN (caso não esteja ordenada)
+library.sort(key=lambda x: x["ISBN"])
+# Buscar o livro pelo ISBN
+book = binary_search_books(library, isbn_to_find)
+# Exibir o resultado
+if book:
+    print(f"Livro encontrado: {book['Título']} ({book['ISBN']})")
+else:
+    print(f"Livro com ISBN {isbn_to_find} não encontrado.")
+
+EX 17:
+    def bucket_sort(arr):
+    if not arr:
+        return arr
+    # Determina o número de baldes com base no tamanho da lista
+    bucket_count = len(arr)
+    max_value, min_value = max(arr), min(arr)
+    bucket_range = (max_value - min_value) / bucket_count + 1
+    buckets = [[] for _ in range(bucket_count)]
+    # Distribui os elementos nos baldes
+    for num in arr:
+        index = int((num - min_value) // bucket_range)
+        buckets[index].append(num)
+    # Ordena cada balde usando Insertion Sort
+    sorted_arr = []
+    for bucket in buckets:
+        sorted_arr.extend(sorted(bucket))  # Podemos usar sorted ou insertion sort aqui
+    return sorted_arr
+
+    def interpolation_search(arr, target):
+    low, high = 0, len(arr) - 1
+    while low <= high and target >= arr[low] and target <= arr[high]:
+        if low == high:
+            if arr[low] == target:
+                return low
+            return -1
+        # Interpolação para estimar a posição
+        pos = low + ((target - arr[low]) * (high - low)) // (arr[high] - arr[low])
+        # Verifica se encontramos a posição correta
+        if arr[pos] == target:
+            return pos
+        if arr[pos] < target:
+            low = pos + 1
+        else:
+            high = pos - 1
+    return -1
+
+    # Lista de alunos com suas respectivas notas
+students = [
+    {"Nome": "João", "Nota": 78},
+    {"Nome": "Maria", "Nota": 95},
+    {"Nome": "Carlos", "Nota": 63},
+    {"Nome": "Ana", "Nota": 88},
+    {"Nome": "Luiz", "Nota": 91},
+    {"Nome": "Fernanda", "Nota": 84},
+    {"Nome": "Pedro", "Nota": 70},
+    {"Nome": "Juliana", "Nota": 85},
+]
+# Extraindo apenas as notas
+notes = [student["Nota"] for student in students]
+# Ordenando as notas usando Bucket Sort
+sorted_notes = bucket_sort(notes)
+# Mostrando as notas ordenadas
+print("Notas ordenadas:", sorted_notes)
+# Função para encontrar o aluno com uma determinada nota
+def find_student_by_grade(sorted_notes, target_grade):
+    # Usando Interpolation Search para encontrar a posição da nota
+    index = interpolation_search(sorted_notes, target_grade)
+    if index != -1:
+        # Encontramos a nota, agora procuramos o aluno correspondente
+        for student in students:
+            if student["Nota"] == target_grade:
+                return student
+    return None
+# Exemplo de busca por uma nota específica
+target_grade = 88
+student = find_student_by_grade(sorted_notes, target_grade)
+if student:
+    print(f"Aluno encontrado: {student['Nome']} com nota {student['Nota']}")
+else:
+    print(f"Aluno com nota {target_grade} não encontrado.")
+
+EX 18:
+Algoritmos de Ordenação Estáveis
+
+1. Merge Sort: O Merge Sort é um algoritmo estável. Quando dois elementos com valores iguais
+são encontrados, o algoritmo mantém a ordem relativa deles.
+Exemplo: Se tivermos a lista [2a, 2b, 1], ao ordenar, ela se torna [1, 2a, 2b]. Note que 2a e 2b
+permanecem na mesma ordem em relação um ao outro.
+
+2. Bubble Sort: O Bubble Sort é um algoritmo estável. Quando dois elementos são iguais, ele
+não altera a ordem deles.
+Exemplo: A lista [2a, 2b, 1] seria ordenada como [1, 2a, 2b], mantendo a ordem de 2a e 2b.
+
+3. Insertion Sort: O Insertion Sort também é estável, pois mantém a ordem dos elementos
+iguais durante a ordenação.
+Exemplo: Para [2a, 2b, 1], a ordenação resultaria em [1, 2a, 2b].
+
+Algoritmos de Ordenação Instáveis
+
+1. Quick Sort: O Quick Sort é instável. Quando elementos com valores iguais estão em posições
+diferentes, a ordem relativa entre eles pode ser alterada.
+Exemplo: Com a lista [2a, 2b, 1], o Quick Sort pode colocar 2a e 2b em posições diferentes,
+tornando a ordenação como [1, 2b, 2a] (a ordem de 2b e 2a foi alterada).
+
+2. Selection Sort: O Selection Sort também é instável, pois pode alterar a ordem relativa dos
+elementos iguais durante o processo de seleção do menor ou maior valor.
+Exemplo: A lista [2a, 2b, 1] poderia ser ordenada como [1, 2b, 2a], alterando a ordem de 2a e 2b.
+
+3. Shell Sort: O Shell Sort, dependendo da implementação do intervalo (gap) utilizado, pode ser
+instável.
+Exemplo: Com a lista [2a, 2b, 1], o Shell Sort pode reordenar os elementos e mudar a posição de
+2a e 2b, produzindo algo como [1, 2b, 2a].
+
+EX 19: import matplotlib.pyplot as plt
+    import numpy as np
+# Função para visualizar o Merge Sort
+def merge_sort_visualization(arr):
+    arr_copy = arr.copy()
+    steps = []
+    def merge_sort_step(arr):
+        if len(arr) <= 1:
+            return arr
+        mid = len(arr) // 2
+        left = merge_sort_step(arr[:mid])
+        right = merge_sort_step(arr[mid:])
+        merged = merge(left, right)
+        steps.append(merged.copy())
+        return merged
+    def merge(left, right):
+        result = []
+        i = j = 0
+        while i < len(left) and j < len(right):
+            if left[i] < right[j]:
+                result.append(left[i])
+                i += 1
+            else:
+                result.append(right[j])
+                j += 1
+        result.extend(left[i:])
+        result.extend(right[j:])
+        return result
+    merge_sort_step(arr_copy)
+    return steps
+# Geração do gráfico de Merge Sort
+arr = [38, 27, 43, 3, 9, 82, 10]
+steps = merge_sort_visualization(arr)
+# Plotar as etapas
+fig, axs = plt.subplots(len(steps), 1, figsize=(10, 2 * len(steps)))
+if len(steps) == 1:
+    axs = [axs]
+for i, step in enumerate(steps):
+    axs[i].bar(range(len(step)), step, color='lightblue')
+    axs[i].set_title(f"Step {i + 1}")
+    axs[i].set_ylim(0, max(arr) + 10)
+plt.tight_layout()
+plt.show()
+
+
+EX 20: 
+    import time
+import random
+# Funções de ordenação
+def bubble_sort(arr):
+    n = len(arr)
+    for i in range(n):
+        for j in range(0, n-i-1):
+            if arr[j] > arr[j+1]:
+                arr[j], arr[j+1] = arr[j+1], arr[j]
+def selection_sort(arr):
+    n = len(arr)
+    for i in range(n):
+        min_idx = i
+        for j in range(i+1, n):
+            if arr[j] < arr[min_idx]:
+                min_idx = j
+        arr[i], arr[min_idx] = arr[min_idx], arr[i]
+def quick_sort(arr):
+    if len(arr) <= 1:
+        return arr
+    pivot = arr[len(arr) // 2]
+    left = [x for x in arr if x < pivot]
+    middle = [x for x in arr if x == pivot]
+    right = [x for x in arr if x > pivot]
+    return quick_sort(left) + middle + quick_sort(right)
+# Funções de busca
+def linear_search(arr, x):
+    for i in range(len(arr)):
+        if arr[i] == x:
+            return i
+    return -1
+def binary_search(arr, x):
+    left, right = 0, len(arr) - 1
+    while left <= right:
+        mid = (left + right) // 2
+        if arr[mid] == x:
+            return mid
+        elif arr[mid] < x:
+            left = mid + 1
+        else:
+            right = mid - 1
+    return -1
+# Função para medir o tempo de execução
+def measure_time(func, *args):
+    start_time = time.time()
+    result = func(*args)
+    end_time = time.time()
+    return result, end_time - start_time
+# Função principal para interação com o usuário
+def main():
+    print("Escolha um algoritmo de ordenação:")
+    print("1. Bubble Sort")
+    print("2. Selection Sort")
+    print("3. Quick Sort")
+    sort_choice = int(input("Digite o número do algoritmo: "))
+    print("\nEscolha um algoritmo de busca:")
+    print("1. Busca Linear")
+    print("2. Busca Binária")
+    search_choice = int(input("Digite o número do algoritmo: "))
+    n = int(input("\nDigite o tamanho da lista: "))
+    arr = random.sample(range(1, 10000), n)
+    sorted_arr = arr.copy()
+    # Ordenação
+    if sort_choice == 1:
+        print("\nExecutando Bubble Sort...")
+        sorted_arr, sort_time = measure_time(bubble_sort, sorted_arr)
+    elif sort_choice == 2:
+        print("\nExecutando Selection Sort...")
+        sorted_arr, sort_time = measure_time(selection_sort, sorted_arr)
+    elif sort_choice == 3:
+        print("\nExecutando Quick Sort...")
+        sorted_arr, sort_time = measure_time(quick_sort, sorted_arr)
+    else:
+        print("Escolha inválida.")
+        return
+    print(f"\nTempo de execução da ordenação: {sort_time:.6f} segundos")
+    # Busca
+    target = int(input("\nDigite o número a ser buscado na lista ordenada: "))
+    if search_choice == 1:
+        print("\nExecutando Busca Linear...")
+        search_result, search_time = measure_time(linear_search, sorted_arr, target)
+    elif search_choice == 2:
+        print("\nExecutando Busca Binária...")
+        search_result, search_time = measure_time(binary_search, sorted_arr, target)
+    else:
+        print("Escolha inválida.")
+        return
+    print(f"\nTempo de execução da busca: {search_time:.6f} segundos")
+    if search_result != -1:
+        print(f"Elemento encontrado no índice {search_result}.")
+    else:
+        print("Elemento não encontrado.")
+if __name__ == "__main__":
+    main()

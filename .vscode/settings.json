@@ -1,0 +1,16 @@
+{
+    "files.associations": {
+        "RadixSort.C": "cpp",
+        "BinarySearch.C": "cpp",
+        "interpolencial.C": "cpp",
+        "InterpolationSearch.C": "cpp",
+        "jumpSearch.C": "cpp",
+        "ExponencialSearch.C": "cpp",
+        "ShellSort.C": "cpp",
+        "MergeSort.C": "cpp",
+        "SelectionSort.C": "cpp",
+        "BucktSort.C": "cpp",
+        "QuickSort.C": "cpp",
+        "TernarySearch.C": "cpp"
+    }
+}
